@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RestItEzAndroid</string>
+    <string name="loginView_TopTxt">Witaj!</string>
+    <string name="loginButton">Zaloguj</string>
+    <string name="bucketButton">Koszyk</string>
+    <string name="confirmButton">Potwierdź cena : </string>
+</resources>
