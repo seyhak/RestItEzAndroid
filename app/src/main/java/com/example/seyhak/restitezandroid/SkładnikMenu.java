@@ -1,13 +1,15 @@
 package com.example.seyhak.restitezandroid; /**
  * Created by Seyhak on 12.03.2018.
  */
+import android.support.annotation.NonNull;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.*;
 import java.text.NumberFormat.*;
 
-public class SkładnikMenu {
+public class SkładnikMenu implements Comparable<SkładnikMenu> {
     private int idSM;
     private String nazwaSM;
     private String rodzajSM;
@@ -61,6 +63,17 @@ public class SkładnikMenu {
         return new SkładnikMenu(Integer.parseInt(value_split[0]),value_split[1],value_split[2],d,date);
     }
 
-    //Date currentDate = new Date();
+    @Override
+    public int compareTo(@NonNull SkładnikMenu o) {
+        int comparedNames = nazwaSM.compareTo(o.nazwaSM);
+        return comparedNames;
+//        if(comparedNames == 0) {
+//            return imie.compareTo(o.imie);
+//        }
+//        else {
+//            return porownaneNazwiska;
+//        }
+    }
+    }
 
-}
+    //Date currentDate = new Date()

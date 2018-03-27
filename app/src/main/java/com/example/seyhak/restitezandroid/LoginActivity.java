@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
           Boolean result =tc.Login(login,password);
           if(result)//jeżeli fajnie to wbijamy do kolejnego activity
           {
+              DataFiller.workerLogin = login;
               Intent intent = new Intent(this, Menu.class);
               intent.putExtra(EXTRA_MESSAGE, login);
               startActivity(intent);

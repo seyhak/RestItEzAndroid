@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.lang.Math.*;
@@ -60,6 +61,7 @@ public class Koszyk extends AppCompatActivity {
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
 
+        Collections.sort(DataFiller.listaZamówionychSM);
         //Adapter
         CustomAdapter adapter = new CustomAdapter(DataFiller.listaZamówionychSM,getApplicationContext());
         ListView lv = (ListView) findViewById(R.id.listViewKoszyk);
@@ -104,14 +106,15 @@ public class Koszyk extends AppCompatActivity {
             dlgAlert.setTitle("Potwierdzenie");
             dlgAlert.setCancelable(true);
             Intent intent = new Intent(this, Menu.class);
-//            dlgAlert.setPositiveButton("Ok",
-//                    new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            //dismiss the dialog
-//                        }
-//                    });
+            dlgAlert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                            Intent intent = new Intent(Koszyk.this, Menu.class);
+                            startActivity(intent);
+                        }
+                    });
             dlgAlert.create().show();
-            startActivity(intent);
         }
     }
 }

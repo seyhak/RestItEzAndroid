@@ -29,9 +29,9 @@ import android.app.*;
 public class Menu extends AppCompatActivity /*implements LoaderManager.LoaderCallbacks<Cursor>*/{
 
 
-    public List<SkładnikMenu> listaSM = new ArrayList<SkładnikMenu>();
-    public List<String> lista = new ArrayList<String>();
-    public List<SkładnikMenu> listaZamówionychSM = new ArrayList<SkładnikMenu>();
+//    public List<SkładnikMenu> listaSM = new ArrayList<SkładnikMenu>();
+//    public List<String> lista = new ArrayList<String>();
+//    public List<SkładnikMenu> listaZamówionychSM = new ArrayList<SkładnikMenu>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +55,7 @@ public class Menu extends AppCompatActivity /*implements LoaderManager.LoaderCal
 
             }
         }
-        Collections.sort(listaSM, new Comparator<SkładnikMenu>() {
-            public int compare(SkładnikMenu v1, SkładnikMenu v2) {
-                return v1.getNazwaSM().compareTo(v2.getNazwaSM());
-            }
-        });
+         Collections.sort(DataFiller.listaSM);
         //Adapter
         CustomAdapter adapter = new CustomAdapter(DataFiller.listaSM,getApplicationContext());
         ListView lv = (ListView) findViewById(R.id.ListViewMenu);
@@ -88,6 +84,19 @@ public class Menu extends AppCompatActivity /*implements LoaderManager.LoaderCal
         {
             Intent intent = new Intent(this, Koszyk.class);
             startActivity(intent);
+        }
+    }
+    @Override
+    protected void onDestroy()
+    {
+        try{
+        TCPClient tc = new TCPClient();
+        tc.Logout();
+        super.onDestroy();
+    }
+        catch (Exception e)
+        {
+
         }
     }
 

@@ -23,6 +23,13 @@ import java.util.concurrent.TimeUnit;
 public class TCPClient {
     private Socket s;
 
+    public  Boolean Logout() throws Exception {
+        ExecutorService executor = Executors.newCachedThreadPool();
+        //executor.submit(new ClientThread(login,password));// until the result came back.
+        Future<Boolean> futureCall = executor.submit(new ClientThreadKill());
+        Boolean result = futureCall.get(1, TimeUnit.SECONDS); // Here the thread will be blocked
+        return result;
+    }
     public Boolean Login(String l, String p) throws Exception {
         ExecutorService executor = Executors.newCachedThreadPool();
         //executor.submit(new ClientThread(login,password));// until the result came back.
@@ -353,6 +360,69 @@ public class TCPClient {
                 Log.d("IO:", e.getMessage());
                 return false;
             }
+        }
+    }
+    class ClientThreadKill implements Callable<Boolean> {
+
+        public void sendLogout() {// arguments supply message and hostname of destination
+
+
+            try {
+
+                DataInputStream input = new DataInputStream(s.getInputStream());//strumień bitów wchodzących
+                DataOutputStream output = new DataOutputStream(s.getOutputStream());//to samo dla wychodzących
+
+                //Step 1 send length
+                //System.out.println("Length"+ data.length());
+                //output.writeInt(data.length());
+                //Step 2 send length
+                // System.out.println("Writing.......");
+                output.writeBytes("W"); // UTF is a string encoding
+
+                //Step 1 read length
+                //int nb = input.readInt();
+                //int nb = 256;
+                /////////////////////////////////////odczyt długości////////////////////////////////////////
+                byte[] digitLgth = new byte[3];
+                for (int i = 0; i < 3; i++) {
+                    digitLgth[i] = input.readByte();
+                }
+                String strLgth = new String(digitLgth);
+                int lgth = new Integer(strLgth);
+
+                //Step 2 read byte
+                byte[] digitsWord = new byte[lgth];
+                for (int i = 0; i < lgth; i++) {
+                    digitsWord[i] = input.readByte();
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////////
+                String st = "nope";
+                st = new String(digitsWord);
+                //System.out.println("Received: "+ st);
+                if (new String("OK").equals(st)) {
+                    output.writeBytes(String.valueOf(DataFiller.workerLogin));
+                    /////////////////////////////////////odczyt długości////////////////////////////////////////
+                }
+            } catch (UnknownHostException e) {
+                System.out.println("Sock:" + e.getMessage());
+            } catch (EOFException e) {
+                System.out.println("EOF:" + e.getMessage());
+            } catch (IOException e) {
+                Log.d("IO:", e.getMessage());
+            }
+        }
+
+
+        @Override
+        public Boolean call() throws Exception {// arguments supply message and hostname of destination
+            int serverPort = 8001;
+            //String ip = "localhost";
+            String ip = "10.0.2.2";
+            //String data = "Hello, How are you?";
+            InetAddress serverAddr = InetAddress.getByName(ip);
+            s = new Socket(serverAddr, serverPort);//tworzy gniazdo
+            sendLogout();
+            return true;
         }
     }
 }
