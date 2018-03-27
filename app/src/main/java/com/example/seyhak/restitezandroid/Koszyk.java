@@ -102,15 +102,15 @@ public class Koszyk extends AppCompatActivity {
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
             dlgAlert.setMessage("Wysłano zamówienie");
             dlgAlert.setTitle("Potwierdzenie");
-            dlgAlert.setPositiveButton("Ok",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            //dismiss the dialog
-                        }
-                    });
             dlgAlert.setCancelable(true);
-            dlgAlert.create().show();
             Intent intent = new Intent(this, Menu.class);
+//            dlgAlert.setPositiveButton("Ok",
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            //dismiss the dialog
+//                        }
+//                    });
+            dlgAlert.create().show();
             startActivity(intent);
         }
     }
