@@ -12,6 +12,7 @@ import java.util.List;
 
 public class DataFiller {
     public static boolean alreadyWasCreated = false;
+    public static int workerID;
     public static List<SkładnikMenu> listaSM = new ArrayList<SkładnikMenu>();
     public static List<String> lista = new ArrayList<String>();
     public static List<SkładnikMenu> listaZamówionychSM = new ArrayList<SkładnikMenu>();

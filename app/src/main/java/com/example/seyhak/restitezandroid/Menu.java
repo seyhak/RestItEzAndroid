@@ -44,10 +44,22 @@ public class Menu extends AppCompatActivity /*implements LoaderManager.LoaderCal
         /////////////////////////////tworzenie listy menu/////////////////////////////////
         if(!DataFiller.alreadyWasCreated)
         {
-            DataFiller.CreateSM();
-            DataFiller.alreadyWasCreated = true;
-        }
+            try{
+                TCPClient tc = new TCPClient();
+                DataFiller.listaSM = tc.GetMenu();
+              //  DataFiller.CreateSM();
+                DataFiller.alreadyWasCreated = true;
+            }
+            catch (Exception e)
+            {
 
+            }
+        }
+        Collections.sort(listaSM, new Comparator<SkładnikMenu>() {
+            public int compare(SkładnikMenu v1, SkładnikMenu v2) {
+                return v1.getNazwaSM().compareTo(v2.getNazwaSM());
+            }
+        });
         //Adapter
         CustomAdapter adapter = new CustomAdapter(DataFiller.listaSM,getApplicationContext());
         ListView lv = (ListView) findViewById(R.id.ListViewMenu);
@@ -75,18 +87,6 @@ public class Menu extends AppCompatActivity /*implements LoaderManager.LoaderCal
         if(DataFiller.listaZamówionychSM.size()!=0)
         {
             Intent intent = new Intent(this, Koszyk.class);
-            /////////////////////////zbędny kod
-
-//        List<Integer> listaID = new  ArrayList<Integer>();
-//        ArrayList<Integer> araj = new ArrayList<Integer>();
-//        for (SkładnikMenu sm:DataFiller.listaZamówionychSM)//foreach
-//        {
-//            listaID.add((sm.getIdSM()));
-//        }
-//        araj.addAll(listaID);
-//
-//            //intent.putExtra("ListKosz",listaID.toArray());
-//            intent.putIntegerArrayListExtra("ListKosz", araj);
             startActivity(intent);
         }
     }

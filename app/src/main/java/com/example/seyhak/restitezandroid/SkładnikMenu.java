@@ -1,9 +1,11 @@
 package com.example.seyhak.restitezandroid; /**
  * Created by Seyhak on 12.03.2018.
  */
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.*;
+import java.text.NumberFormat.*;
 
 public class SkładnikMenu {
     private int idSM;
@@ -41,6 +43,22 @@ public class SkładnikMenu {
 
     public Date getDataDodaniaSM() {
         return dataDodaniaSM;
+    }
+    public static SkładnikMenu BuildFromStringFromServer(String x)
+    {
+        String[] value_split = x.split("#");
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        String dateString = value_split[4];
+        Date date = new Date();
+        try {
+            date = dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        double d =Double.parseDouble(value_split[3].replace(',','.'));
+
+        return new SkładnikMenu(Integer.parseInt(value_split[0]),value_split[1],value_split[2],d,date);
     }
 
     //Date currentDate = new Date();

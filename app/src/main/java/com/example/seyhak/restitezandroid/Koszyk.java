@@ -1,5 +1,7 @@
 package com.example.seyhak.restitezandroid;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +25,7 @@ import static java.lang.Math.*;
 
 public class Koszyk extends AppCompatActivity {
 
+    double cena = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +81,6 @@ public class Koszyk extends AppCompatActivity {
     }
     private  void Podlicz()
     {
-        double cena = 0;
         for (SkładnikMenu sm:DataFiller.listaZamówionychSM
              ) {
             cena += sm.getCenaSM();
@@ -90,7 +92,26 @@ public class Koszyk extends AppCompatActivity {
         String btnName = getString(R.string.confirmButton) + " " + Double.toString(cena);
         btn.setText(btnName);
     }
-    public void Potwierdz_click(View view) {
+    public void Potwierdz_click(View view)throws Exception {
         //wysłanie zamówienia na serwer
+        TCPClient tc = new TCPClient();
+        Boolean bln= tc.SendOrders(DataFiller.listaZamówionychSM,cena);
+        if(bln)
+        {
+            DataFiller.listaZamówionychSM=new ArrayList<SkładnikMenu>();
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("Wysłano zamówienie");
+            dlgAlert.setTitle("Potwierdzenie");
+            dlgAlert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                        }
+                    });
+            dlgAlert.setCancelable(true);
+            dlgAlert.create().show();
+            Intent intent = new Intent(this, Menu.class);
+            startActivity(intent);
+        }
     }
 }
