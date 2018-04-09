@@ -31,33 +31,6 @@ public class Koszyk extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_koszyk);
-//        Intent intent = getIntent();
-//        List<Integer> listIDs = new ArrayList<Integer>();
-//        listIDs.addAll(intent.getIntegerArrayListExtra("ListKosz"));
-//
-//
-//
-//        ListView lv = (ListView) findViewById(R.id.listViewKoszyk);
-//        List<String> listIDsStr = new ArrayList<String>();
-//        for (Integer liczba:
-//             listIDs) {
-//            listIDsStr.add(Integer.toString(liczba));
-//
-//        }
-//        ArrayList<String> araj = new ArrayList<String>();
-//
-//        araj.addAll(listIDsStr);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,araj);
-//       // ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, R.layout.activity_koszyk,araj);
-//       lv.setAdapter(adapter);
-//       adapter.notifyDataSetChanged();
-//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) //Rozpoznaje kliknięcia na obiekt z listy, MA być tutaj usuwanie pozycji
-//            {
-//
-//            }
-//        });
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
 
@@ -83,6 +56,7 @@ public class Koszyk extends AppCompatActivity {
     }
     private  void Podlicz()
     {
+        cena = 0;
         for (SkładnikMenu sm:DataFiller.listaZamówionychSM
              ) {
             cena += sm.getCenaSM();

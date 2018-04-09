@@ -1,20 +1,32 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        Over {
+            keyAlias 'MyAndroidKey'
+            keyPassword 'seyhak'
+            storeFile file('C:/Users/Seyhak/Desktop/RestItEzApp/RestItEz.jks')
+            storePassword 'seyhak'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.example.seyhak.restitezandroid"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.Over
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.Over
         }
+    }
+    productFlavors {
     }
 }
 

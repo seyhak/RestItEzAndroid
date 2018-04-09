@@ -86,18 +86,36 @@ public class Menu extends AppCompatActivity /*implements LoaderManager.LoaderCal
             startActivity(intent);
         }
     }
-    @Override
-    protected void onDestroy()
-    {
-        try{
-        TCPClient tc = new TCPClient();
-        tc.Logout();
-        super.onDestroy();
-    }
-        catch (Exception e)
-        {
-
-        }
-    }
+//    @Override
+//    protected void onTaskRemoved(Intent rootIntent)
+//    {
+//
+//        try{
+//            TCPClient tc = new TCPClient();
+//            tc.Logout();
+//            //Log.e("FLAGX : ", ServiceInfo.FLAG_STOP_WITH_TASK + "");
+//            super.onTaskRemoved(rootIntent);
+//            System.out.println("kill");
+//        }
+//        catch (Exception e)
+//        {
+//
+//        }
+//
+//
+//    }
+//    protected void onDestroy()
+//    {
+//        try{
+//        TCPClient tc = new TCPClient();
+//        tc.Logout();
+//        super.onDestroy();
+//        System.out.println("kill");
+//    }
+//        catch (Exception e)
+//        {
+//
+//        }
+//    }
 
 }
